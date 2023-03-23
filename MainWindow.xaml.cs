@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -28,21 +29,8 @@ namespace _122_Final
         public MainWindow()
         {
             InitializeComponent();
-            Flowdocument();
-            
-        }
-
-        public void Preload ()
-        {
-            string artName = txtArtName.Text;
-            string artist = txtArtist.Text;
-            string artinfor = txtArtInfor.Text;
-            string artinfo = artName + " " + artist + " " + artinfor;
-            string filepath = txtFilePath.Text;
-            
-            artPieces.Add(new ArtPiece(artName, artist, artinfo, filepath, string.Empty, DateTime.Now)); 
-            lbvDisplay.ItemsSource = artPieces;
-        }  
+            Flowdocument();            
+        } 
         
         private void btDisplayImage_Click(object sender, RoutedEventArgs e)
         {
@@ -86,7 +74,7 @@ namespace _122_Final
             {
                 MessageBox.Show("Please select the Art style.");
             }
-
+                              
 
             ArtPiece art = new ArtPiece(txtArtName.Text, txtArtist.Text, artInfo, txtFilePath.Text, artstyle, DateTime.Parse(dtpSelectTime.Text));
             artPieces.Add(art);
@@ -94,7 +82,8 @@ namespace _122_Final
             rtbDisplay.Text = $"Artiest: {txtArtist.Text} \n created an art: {txtArtName.Text} \n  art style: {artstyle}\n on: {DateTime.Parse(dtpSelectTime.Text)} \n at: {txtFilePath.Text} \n with detailed info: {artInfo}";
 
             lbvDisplay.ItemsSource = artPieces;
-            lbvDisplay.Items.Refresh();            
+            lbvDisplay.Items.Refresh();
+            Flowdocument();
         }
 
         string StringFromRichTextBox(RichTextBox rtb)
@@ -113,16 +102,62 @@ namespace _122_Final
 
         public void Flowdocument()
         {
-            string name = txtArtName.Text;
             FlowDocument fdDisplay = new FlowDocument();
-            Paragraph p = new Paragraph();
-            Run r = new Run(name);
-            r.FontWeight = FontWeights.Bold;
-            r.Foreground = new SolidColorBrush(Colors.Cyan);
-            r.FontSize = 18;
-            p.Inlines.Add(r);
-            fdDisplay.Blocks.Add(p);
+            Paragraph artname = new Paragraph();
+            Paragraph artist = new Paragraph();
+            Paragraph filepath = new Paragraph();
+            Run artName = new Run(txtArtName.Text);
+            Run artistrun = new Run(txtArtist.Text);            
+            Run filePath = new Run(txtFilePath.Text);
+            artName.FontWeight = FontWeights.Bold;
+            artName.FontSize = 18;
+            artistrun.FontWeight = FontWeights.Bold;
+            artistrun.FontSize = 16;            
+            filePath.FontWeight = FontWeights.Bold;
+            filePath.FontSize = 14;
+            artname.Inlines.Add(artName);
+            artist.Inlines.Add(artistrun);
+            filepath.Inlines.Add(filePath);
+            fdDisplay.Blocks.Add(artname);
+            fdDisplay.Blocks.Add(artist);
+            fdDisplay.Blocks.Add(filepath);
             rtbInformationDisplay.Document = fdDisplay;
-        } 
+        }
+
+        private void lbvDisplay_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedArtPiece = (ArtPiece)lbvDisplay.SelectedItem;
+            txtArtName.Text = selectedArtPiece.Name;
+            txtArtist.Text = selectedArtPiece.Artist;
+            txtFilePath.Text = selectedArtPiece.FilePath;
+            dtpSelectTime.Text = selectedArtPiece.Date.ToString();
+            
+            ImageDisplay.Source = new BitmapImage(new Uri(selectedArtPiece.FilePath));
+            
+            rtbDisplay.Text = $"Artiest: {selectedArtPiece.Name} \n created an art: {selectedArtPiece.Artist} \n  art style: {selectedArtPiece.ArtSytle}\n on: {selectedArtPiece.Date} \n at: {selectedArtPiece.FilePath} \n with detailed info: {selectedArtPiece.Body}";
+
+            rtbBody.Document.Blocks.Clear();
+            rtbBody.Document.Blocks.Add(new Paragraph(new Run(selectedArtPiece.Body)));
+            rtbInformationDisplay.Document.Blocks.Clear();
+            Flowdocument();
+
+            switch (selectedArtPiece.ArtSytle)
+            {
+                case "Experessionism":
+                    rbExpressionism.IsChecked = true;
+                    break;
+                case "Pressionism":
+                    rbmpressionsim.IsChecked = true;
+                    break;
+                case "Surrealism":
+                    rbSurrealism.IsChecked = true;
+                    break;
+                case "Neoclassicism":
+                    rbNeoclassicism.IsChecked = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

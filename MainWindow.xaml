@@ -41,7 +41,7 @@
             <RadioButton x:Name="rbNeoclassicism" Content="Neoclassicism" Canvas.Left="153" Canvas.Top="246" HorizontalAlignment="Center" VerticalAlignment="Top"/>
         </Canvas>
         <Image HorizontalAlignment="Left" Height="284" Margin="700,322,0,0" VerticalAlignment="Top" Width="186"/>
-        <ListView x:Name="lbvDisplay" HorizontalAlignment="Left" Height="413" VerticalAlignment="Center" Width="277" d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.5,0.5" Canvas.Left="303">
+        <ListView x:Name="lbvDisplay" HorizontalAlignment="Left" Height="413" VerticalAlignment="Center" Width="277" d:ItemsSource="{d:SampleData ItemCount=5}" RenderTransformOrigin="0.5,0.5" Canvas.Left="303" SelectionChanged="lbvDisplay_SelectionChanged">
             <ListView.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -61,14 +61,14 @@
             </ListView.View>
         </ListView>
         <Image x:Name="ImageDisplay" Height="207" Canvas.Left="582" Canvas.Top="10" Width="208"/>
-        <RichTextBox  Height="87" Canvas.Left="582" Canvas.Top="155" Width="208" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <RichTextBox  Height="107" Canvas.Left="582" Canvas.Top="173" Width="208" HorizontalAlignment="Center" VerticalAlignment="Top">
             <FlowDocument>
                 <Paragraph>
                     <Run x:Name="rtbDisplay"/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <RichTextBox x:Name="rtbInformationDisplay" Height="116" Canvas.Left="599" Canvas.Top="267" Width="181">
+        <RichTextBox x:Name="rtbInformationDisplay" Height="98" Canvas.Left="582" Canvas.Top="285" Width="208" HorizontalAlignment="Center" VerticalAlignment="Top">
 
         </RichTextBox>
 

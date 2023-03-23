@@ -52,9 +52,27 @@ namespace _122_Final
             }
         }
 
+        public string FilePath
+        {
+            get { return _filePath; }
+            set { value = _filePath; }
+        }
+
         public string Year
         {
             get { return _date.Year.ToString(); }
+        }
+
+        public DateTime Date
+        { 
+            get { return _date; }
+            set { value = _date; }
+        }
+
+        public string ArtSytle
+        { 
+            get { return _artStyle; }
+            set { _artStyle = value; }
         }
 
         private BitmapImage GenerateBitMap(string filePath)
