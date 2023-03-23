@@ -30,7 +30,28 @@ namespace _122_Final
             _date = date;
             _art = GenerateBitMap(filePath);
         }
-       
+
+        public string Name
+        { 
+            get { return _name; }
+            set {  _name = value; }
+        }
+
+        public string Artist
+        { 
+            get { return _artist; }
+            set { _artist = value; }
+        }
+
+        public string Body
+        { 
+            get { return _body; }
+            set
+            {
+                _body = value;
+            }
+        }
+
         public string Year
         {
             get { return _date.Year.ToString(); }
@@ -45,10 +66,5 @@ namespace _122_Final
             bitImage.EndInit();
             return bitImage; ;
         }
-
-        //public override string ToString()
-        //{
-        //    return $"{_name} {_artist} {_date} {_artStyle}";
-        //}
     }
 }

@@ -28,7 +28,8 @@ namespace _122_Final
         public MainWindow()
         {
             InitializeComponent();
-            Preload();
+            Flowdocument();
+            
         }
 
         public void Preload ()
@@ -41,7 +42,8 @@ namespace _122_Final
             
             artPieces.Add(new ArtPiece(artName, artist, artinfo, filepath, string.Empty, DateTime.Now)); 
             lbvDisplay.ItemsSource = artPieces;
-        }                                    
+        }  
+        
         private void btDisplayImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -58,13 +60,69 @@ namespace _122_Final
         }
         private void btSubmitArtInforation_Click(object sender, RoutedEventArgs e)
         {
-            ArtPiece art = new ArtPiece(txtArtName.Text, txtArtist.Text, String.Empty, txtFilePath.Text, String.Empty, DateTime.Parse(dtpSelectTime.Text));
+            string artstyle = "";
+            string artInfo = StringFromRichTextBox(rtbBody);
+            bool experessionism = rbExpressionism.IsChecked.Value;
+            bool pressionism = rbmpressionsim.IsChecked.Value;
+            bool surrealism = rbSurrealism.IsChecked.Value;
+            bool neoclassicism = rbNeoclassicism.IsChecked.Value;
+            if (experessionism == true)
+            {
+                artstyle = "Experessionism";
+            }
+            else if (pressionism == true)
+            {
+                artstyle = "Pressionism";
+            }
+            else if (surrealism == true)
+            {
+                artstyle = "Surrealism";
+            }
+            else if (neoclassicism == true)
+            {
+                artstyle = "Neoclassicism";
+            }
+            else
+            {
+                MessageBox.Show("Please select the Art style.");
+            }
 
-            string artName = txtArtName.Text;
-            string artist = txtArtist.Text;
-            string artinfor = txtArtInfor.Text;
-            string artinfo = artName + " " + artist + " " + artinfor;
-            rtbDisplay.Text += artinfo;
+
+            ArtPiece art = new ArtPiece(txtArtName.Text, txtArtist.Text, artInfo, txtFilePath.Text, artstyle, DateTime.Parse(dtpSelectTime.Text));
+            artPieces.Add(art);
+
+            rtbDisplay.Text = $"Artiest: {txtArtist.Text} \n created an art: {txtArtName.Text} \n  art style: {artstyle}\n on: {DateTime.Parse(dtpSelectTime.Text)} \n at: {txtFilePath.Text} \n with detailed info: {artInfo}";
+
+            lbvDisplay.ItemsSource = artPieces;
+            lbvDisplay.Items.Refresh();            
         }
+
+        string StringFromRichTextBox(RichTextBox rtb)
+        {
+            TextRange textRange = new TextRange(
+                // TextPointer to the start of content in the RichTextBox.
+                rtb.Document.ContentStart,
+                // TextPointer to the end of content in the RichTextBox.
+                rtb.Document.ContentEnd
+            );
+
+            // The Text property on a TextRange object returns a string
+            // representing the plain text content of the TextRange.
+            return textRange.Text;
+        }
+
+        public void Flowdocument()
+        {
+            string name = txtArtName.Text;
+            FlowDocument fdDisplay = new FlowDocument();
+            Paragraph p = new Paragraph();
+            Run r = new Run(name);
+            r.FontWeight = FontWeights.Bold;
+            r.Foreground = new SolidColorBrush(Colors.Cyan);
+            r.FontSize = 18;
+            p.Inlines.Add(r);
+            fdDisplay.Blocks.Add(p);
+            rtbInformationDisplay.Document = fdDisplay;
+        } 
     }
 }
