@@ -8,10 +8,15 @@ using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
+//Meili Zheng;
+//122_Final;
+//3/22/2023;
+
 namespace _122_Final
 {
     public class ArtPiece
     {
+        //creat the field;
         DateTime _date;
         string _name;
         string _artist;
@@ -20,6 +25,7 @@ namespace _122_Final
         BitmapImage _art;
         string _artStyle;
 
+        //creat the constructor;
         public ArtPiece(string name, string artist, string body, string filePath, string artStyle, DateTime date)
         {
             _name = name;
@@ -31,6 +37,7 @@ namespace _122_Final
             _art = GenerateBitMap(filePath);
         }
 
+        //creat the property;
         public string Name
         { 
             get { return _name; }
@@ -75,6 +82,7 @@ namespace _122_Final
             set { _artStyle = value; }
         }
 
+        //creat the generateBitMap method;
         private BitmapImage GenerateBitMap(string filePath)
         {
             BitmapImage bitImage = new BitmapImage();
